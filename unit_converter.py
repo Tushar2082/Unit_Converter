@@ -16,20 +16,13 @@ def kelvin_to_celsius(kelvin):
 
 def fahrenheit_to_kelvin(fahrenheit):
     """Convert Fahrenheit to Kelvin"""
-    # First convert to Celsius, then to Kelvin
     celsius = fahrenheit_to_celsius(fahrenheit)
     return celsius_to_kelvin(celsius)
 
 def kelvin_to_fahrenheit(kelvin):
     """Convert Kelvin to Fahrenheit"""
-    # First convert to Celsius, then to Fahrenheit
     celsius = kelvin_to_celsius(kelvin)
     return celsius_to_fahrenheit(celsius)
-
-def format_result(value, decimal_places):
-    """Format the result with the specified number of decimal places"""
-    format_str = f"{{:.{decimal_places}f}}"
-    return format_str.format(value)
 
 def display_menu():
     """Display the menu of conversion options"""
@@ -40,62 +33,85 @@ def display_menu():
     print("4. Kelvin to Celsius")
     print("5. Fahrenheit to Kelvin")
     print("6. Kelvin to Fahrenheit")
+    print("7. Set default values")
     print("0. Exit program")
 
-print("Welcome to the Temperature Unit Converter!")
-decimal_places = 2  # Default decimal places
+print("Welcome to the Simple Temperature Unit Converter!")
+
+# Default values
+default_c = 25.0  # Room temperature in Celsius
+default_f = 72.0  # Room temperature in Fahrenheit
+default_k = 298.15  # Room temperature in Kelvin
 
 while True:
     display_menu()
     
     try:
-        choice = int(input("\nEnter your choice (0-6): "))
+        choice = input("\nEnter your choice (0-7): ")
         
-        if choice == 0:
+        if choice == "0":
             print("Thank you for using the Temperature Unit Converter. Goodbye!")
             break
-        
-        if choice < 0 or choice > 6:
-            print("Invalid choice! Please enter a number between 0 and 6.")
-            continue
-        
-        # Ask for decimal places preference
-        try:
-            decimal_input = input(f"Enter number of decimal places (currently {decimal_places}, press Enter to keep): ")
-            if decimal_input.strip():  # If user entered something
-                new_decimal = int(decimal_input)
-                if new_decimal < 0:
-                    print("Cannot use negative decimal places. Keeping current setting.")
-                else:
-                    decimal_places = new_decimal
-                    print(f"Decimal places set to {decimal_places}")
-        except ValueError:
-            print(f"Invalid input. Keeping decimal places at {decimal_places}.")
             
-        if choice == 1:
-            celsius = float(input("Enter temperature in Celsius: "))
+        if choice == "7":
+            print("\nSet Default Values")
+            try:
+                new_c = input(f"Default Celsius value (current: {default_c}): ")
+                if new_c:
+                    default_c = float(new_c)
+                    
+                new_f = input(f"Default Fahrenheit value (current: {default_f}): ")
+                if new_f:
+                    default_f = float(new_f)
+                    
+                new_k = input(f"Default Kelvin value (current: {default_k}): ")
+                if new_k:
+                    default_k = float(new_k)
+                    
+                print("Default values updated!")
+            except ValueError:
+                print("Invalid input. Using previous default values.")
+            continue
+            
+        if choice == "1":
+            temp_input = input(f"Enter temperature in Celsius (default: {default_c}): ")
+            celsius = default_c if temp_input == "" else float(temp_input)
             result = celsius_to_fahrenheit(celsius)
-            print(f"{celsius}°C = {format_result(result, decimal_places)}°F")
-        elif choice == 2:
-            fahrenheit = float(input("Enter temperature in Fahrenheit: "))
+            print(f"{celsius}°C = {result:.2f}°F")
+            
+        elif choice == "2":
+            temp_input = input(f"Enter temperature in Fahrenheit (default: {default_f}): ")
+            fahrenheit = default_f if temp_input == "" else float(temp_input)
             result = fahrenheit_to_celsius(fahrenheit)
-            print(f"{fahrenheit}°F = {format_result(result, decimal_places)}°C")
-        elif choice == 3:
-            celsius = float(input("Enter temperature in Celsius: "))
+            print(f"{fahrenheit}°F = {result:.2f}°C")
+            
+        elif choice == "3":
+            temp_input = input(f"Enter temperature in Celsius (default: {default_c}): ")
+            celsius = default_c if temp_input == "" else float(temp_input)
             result = celsius_to_kelvin(celsius)
-            print(f"{celsius}°C = {format_result(result, decimal_places)}K")
-        elif choice == 4:
-            kelvin = float(input("Enter temperature in Kelvin: "))
+            print(f"{celsius}°C = {result:.2f}K")
+            
+        elif choice == "4":
+            temp_input = input(f"Enter temperature in Kelvin (default: {default_k}): ")
+            kelvin = default_k if temp_input == "" else float(temp_input)
             result = kelvin_to_celsius(kelvin)
-            print(f"{kelvin}K = {format_result(result, decimal_places)}°C")
-        elif choice == 5:
-            fahrenheit = float(input("Enter temperature in Fahrenheit: "))
+            print(f"{kelvin}K = {result:.2f}°C")
+            
+        elif choice == "5":
+            temp_input = input(f"Enter temperature in Fahrenheit (default: {default_f}): ")
+            fahrenheit = default_f if temp_input == "" else float(temp_input)
             result = fahrenheit_to_kelvin(fahrenheit)
-            print(f"{fahrenheit}°F = {format_result(result, decimal_places)}K")
-        elif choice == 6:
-            kelvin = float(input("Enter temperature in Kelvin: "))
+            print(f"{fahrenheit}°F = {result:.2f}K")
+            
+        elif choice == "6":
+            temp_input = input(f"Enter temperature in Kelvin (default: {default_k}): ")
+            kelvin = default_k if temp_input == "" else float(temp_input)
             result = kelvin_to_fahrenheit(kelvin)
-            print(f"{kelvin}K = {format_result(result, decimal_places)}°F")
+            print(f"{kelvin}K = {result:.2f}°F")
+            
+        else:
+            print("Invalid choice! Please enter a number between 0 and 7.")
+            continue
             
         input("\nPress Enter to continue...")
         
